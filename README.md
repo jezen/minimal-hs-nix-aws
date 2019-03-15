@@ -42,7 +42,7 @@ Any time you change the code and wish to redeploy, you must first modify the
 NixOps deployment with the following command:
 
 ```
-nixops create -d minimal services.nix aws.nix
+nixops modify -d minimal services.nix aws.nix
 ```
 
 I would like to see rate limiting with nginx, and a strategy for banning
