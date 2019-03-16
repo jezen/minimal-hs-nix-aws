@@ -48,4 +48,4 @@ nixops modify -d minimal services.nix aws.nix
 I would like to see rate limiting with nginx, and a strategy for banning
 scrapers and brute-force attempts, possibly with fail2ban.
 
-n.b. The Haskell application must be deployed on a Linux machine.
+n.b. The Haskell application must be compiled on a Linux machine.
