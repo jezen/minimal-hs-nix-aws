@@ -45,6 +45,29 @@
 
       };
 
+      services.timesyncd.enable = true;
+
+      services.fail2ban = {
+        enable = true;
+
+        jails.http-get-dos = ''
+          action   = iptables-multiport
+          backend  = auto
+          bantime  = 600
+          enabled  = true
+          filter   = http-get-dos
+          findtime = 3600
+          logpath  = /var/spool/nginx/logs/access.log
+          maxretry = 50
+          port     = http,https
+        '';
+      };
+
+      environment.etc."fail2ban/filter.d/http-get-dos.conf".text = ''
+        [Definition]
+        failregex = <HOST>.*
+      '';
+
       systemd.services.minimal = {
         description = "Minimal Webserver";
         requires = [];
