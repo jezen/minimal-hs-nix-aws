@@ -3,7 +3,7 @@
   { networking.hostName = "hydra";
     networking.firewall.allowedTCPPorts =
       [ ## config.services.hydra.port 25
-        22 80 443
+        22 25 80 443
       ];
 
     services.hydra =
@@ -20,13 +20,13 @@
       ];
 
     nix =
-    { useSandbox = true;
-      buildCores =  0;
+    { useSandbox   = true;
+      buildCores   =  0;
       nrBuildUsers = 32;
 
       buildMachines = [
         { hostName = "localhost";
-          system = "x86_64-linux";
+          system   = "x86_64-linux";
           supportedFeatures =
             [ "kvm"
               "nixos-test"
