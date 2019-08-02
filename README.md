@@ -71,6 +71,8 @@ scrapers and brute-force attempts, possibly with fail2ban.
 
 ## Hydra Setup
 
+All Hydra related files inside `hydra` repository.
+
 Hydra is CI system and can be installed locally like this:
 ```bash
 nix-channel --add http://hydra.nixos.org/jobset/hydra/master/channel/latest
@@ -83,8 +85,8 @@ you need to use separate `ci-hydra.nix` file for deployment, with configuration 
 To setup build for every GitHub PR on a deployed Hydra instance we need following steps
 
 ```bash
-$ nixops create aws.nix hydra.nix -d ci-hydra
-$ nixops deploy -d ci-hydra
+$ nixops create ci-aws.nix ci-services.nix ci-hydra.nix -d hydra
+$ nixops deploy -d hydra
 ```
 
-that will start Hydra CI server
+that will start Hydra CI server on AWS.

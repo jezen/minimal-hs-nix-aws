@@ -2,9 +2,9 @@ let
   ## -- Global system options ---------------------------------------
   profile     = "default";                 # https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html
   region      = "us-west-2";               # https://docs.aws.amazon.com/general/latest/gr/rande.html
-  accessKeyId = "AKIAYQLZVKLZKWIQOPGE";
+  accessKeyId = "AKIAYQLZVKLZAOPBIEHJ";
   awsEC2type  = "t3.nano";                 # https://aws.amazon.com/ec2/instance-types/
-  privateKey  = "nix.pem";                 # "/path/to/your-key-name.pem"
+  privateKey  = "../nix.pem";              # "/path/to/your-key-name.pem"
 
 in {
 
