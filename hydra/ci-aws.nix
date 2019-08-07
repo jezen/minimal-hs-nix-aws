@@ -4,7 +4,7 @@ let
   region      = "us-west-2";               # https://docs.aws.amazon.com/general/latest/gr/rande.html
   accessKeyId = "AKIAYQLZVKLZAOPBIEHJ";
   awsEC2type  = "t3.nano";                 # https://aws.amazon.com/ec2/instance-types/
-  privateKey  = "../nix.pem";              # "/path/to/your-key-name.pem"
+  privateKey  = "../nix.pem";              # /path/to/your-key-name.pem
 
 in {
 
@@ -13,12 +13,11 @@ in {
     deployment.ec2.accessKeyId  = accessKeyId;
     deployment.ec2.region       = region;
     deployment.ec2.instanceType = awsEC2type;
-    deployment.ec2.keyPair      = "nix";  #resources.ec2KeyPairs.minimal-keys;
+    deployment.ec2.keyPair      = "nix";
     deployment.ec2.privateKey   = privateKey;
+    deployment.ec2.securityGroups = [ "default" "full-access" ];
     nixpkgs.localSystem.system  = "x86_64-linux";
   };
 
-  resources.ec2KeyPairs.minimal-keys =
-    { inherit region accessKeyId; };
 
 }

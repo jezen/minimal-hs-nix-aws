@@ -24,6 +24,7 @@
         allowedUDPPorts = [ 25826 ];
       };
 
+      services.openssh.enable = true;
       environment.systemPackages = [ hydra ];
 
       services.nginx = {
@@ -45,23 +46,6 @@
 
       };
 
-      services.timesyncd.enable = true;
-
-      services.fail2ban = {
-        enable = true;
-
-        jails.http-get-dos = ''
-          action   = iptables-multiport
-          backend  = auto
-          bantime  = 600
-          enabled  = true
-          filter   = http-get-dos
-          findtime = 3600
-          logpath  = /var/spool/nginx/logs/access.log
-          maxretry = 50
-          port     = http,https
-        '';
-      };
 
     };
 }
