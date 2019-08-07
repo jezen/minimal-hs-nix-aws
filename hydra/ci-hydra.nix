@@ -9,14 +9,16 @@
         5000 # nix-serve daemon (Nix cache)
       ];
 
-    services.hydra =
-    { enable = true;
+    services.hydra = {
+      enable = true;
       minimumDiskFree = 10; # GiB
       minimumDiskFreeEvaluator = 10; # GiB
-      hydraURL = "hydra.localhost.com";
-      notificationSender = "admin@domain.com";
+      hydraURL = "http://localhost:8080";
+      notificationSender = "hydra@localhost";
       services.hydra.port = 8080;
       services.hydra.logo = ./custom-logo.png;
+      buildMachinesFiles = [];
+      useSubstitutes = true;
     };
 
     ## add private repo handling

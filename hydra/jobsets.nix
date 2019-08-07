@@ -20,7 +20,7 @@ let
     enableemail = false;
     emailoverride = "";
     nixexprinput = "minimal-aws-example";
-    nixexprpath = "release.nix";
+    nixexprpath = "tests.nix";
     inputs = jobs.inputs // {
       nixpkgs = {
         type = "git";
