@@ -1,9 +1,10 @@
 let
   ## -- Global system options ---------------------------------------
   profile     = "default";                 # https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html
-  region      = "eu-central-1";            # https://docs.aws.amazon.com/general/latest/gr/rande.html
-  accessKeyId = "AKIA5UA2KBIJSFJQYMPQ";
-  awsEC2type  = "t3.nano";                 # https://aws.amazon.com/ec2/instance-types/
+  region      = "us-west-2";               # https://docs.aws.amazon.com/general/latest/gr/rande.html
+  accessKeyId = "nixops" ;                  # "AKIAYQLZVKLZAOPBIEHJ";
+  awsEC2type  = "t2.micro";                 # https://aws.amazon.com/ec2/instance-types/
+  privateKey  = "nix.pem";                 # "/path/to/your-key-name.pem"
 
 in {
 
@@ -12,7 +13,8 @@ in {
     deployment.ec2.accessKeyId  = accessKeyId;
     deployment.ec2.region       = region;
     deployment.ec2.instanceType = awsEC2type;
-    deployment.ec2.keyPair      = resources.ec2KeyPairs.minimal-keys;
+    deployment.ec2.keyPair      = "nix";  #resources.ec2KeyPairs.minimal-keys;
+    deployment.ec2.privateKey   = privateKey;
     nixpkgs.localSystem.system  = "x86_64-linux";
   };
 

@@ -31,9 +31,6 @@
     # nix-serve - Nix cache daemon
     services.nix-serve.enable = true;
 
-    # for remote access to the machine
-    services.openssh.enable = true;
-
     # nix =
     # { useSandbox   = true;
     #   buildCores   =  0;

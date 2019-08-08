@@ -17,3 +17,12 @@ $ nixops deploy -d hydra
 ```
 
 that will start Hydra CI server on AWS.
+
+## Local run
+
+```bash
+$ nixops create ci-vbox.nix ci-services.nix ci-hydra.nix jobsets.nix -d hydra
+$ nixops deploy -d hydra
+```
+
+notice change from from `ci-aws.nix` to `ci-vbox.nix`

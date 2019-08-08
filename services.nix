@@ -2,25 +2,31 @@
   network.description = "minimal";
 
   production =
-    { config, pkgs, ... }: let
+    { config, pkgs, lib, ... }: let
       nixpkgs = import ./nixpkgs.nix;
       myPkgs  = import nixpkgs { localSystem.system = "x86_64-linux"; };
 
-      minimal = pkgs.haskell.lib.overrideCabal (import ./default.nix { pkgs = myPkgs; }) (drv: {
-        doCheck = false;
-        doHaddock = false;
-        enableLibraryProfiling = false;
-        enableSeparateDataOutput = false;
-        enableSharedExecutables = false;
-        isLibrary = false;
-        postFixup = "rm -rf $out/lib $out/nix-support $out/share/doc";
-        testHaskellDepends = [];
-      });
+      # happens on new t3 instances
+      # boot.loader.grub.device = lib.mkForce "/dev/nvme0n1";
+
+      minimal =
+        pkgs.haskell.lib.overrideCabal
+          (import ./default.nix { pkgs = myPkgs; })
+          (drv: {
+            doCheck = false;
+            doHaddock = false;
+            enableLibraryProfiling = false;
+            enableSeparateDataOutput = false;
+            enableSharedExecutables = false;
+            isLibrary = false;
+            postFixup = "rm -rf $out/lib $out/nix-support $out/share/doc";
+            testHaskellDepends = [];
+          });
     in
     { networking.hostName = "minimal";
 
       networking.firewall = {
-        allowedTCPPorts = [ 22 80 ];
+        allowedTCPPorts = [ 22 80 443];
         allowedUDPPorts = [ 25826 ];
       };
 

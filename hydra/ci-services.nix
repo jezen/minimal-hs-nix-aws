@@ -1,7 +1,5 @@
-{
-  network.description = "hydra";
-
-  production =
+{  network.description = "hydra";
+   production =
     { config, pkgs, ... }: let
       nixpkgs = import ./nixpkgs.nix;
       myPkgs  = import nixpkgs { localSystem.system = "x86_64-linux"; };
@@ -17,15 +15,26 @@
         testHaskellDepends = [];
       });
     in
-    { networking.hostName = "hydra";
-
+    {
+      networking.hostName = "hydra";
       networking.firewall = {
         allowedTCPPorts = [ 22 80 443];
         allowedUDPPorts = [ 25826 ];
       };
 
-      services.openssh.enable = true;
+
       environment.systemPackages = [ hydra ];
+
+      # for remote access to the machine
+      # services.ntp.enable                     = false;
+      # services.openssh.enable                 = true;
+      # services.openssh.permitRootLogin        = "yes";
+      # services.openssh.allowSFTP              = false;
+      # services.openssh.passwordAuthentication = false;
+      # users = {
+      #   mutableUsers = false;
+      #   users.root.openssh.authorizedKeys.keyFiles = [ ~/.ssh/id_rsa.pub ];
+      # };
 
       services.nginx = {
 
