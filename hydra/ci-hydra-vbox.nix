@@ -34,7 +34,13 @@
     };
 
     nix.buildMachines = [
-      { hostName = "slave1"; maxJobs = 1; speedFactor = 1; sshKey = "${../secret_key}"; sshUser = "root"; system = "x86_64-linux"; }
+      { hostName = "slave1";
+        maxJobs = 1;
+        speedFactor = 1;
+        sshKey = "${../secret_key}";
+        sshUser = "root";
+        system = "x86_64-linux";
+      }
     ];
 
   };

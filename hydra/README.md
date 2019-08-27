@@ -22,11 +22,19 @@ that will start Hydra CI server on AWS.
 
 ## Local run
 
-We can run Hydra locally
+We can run Hydra locally inside VirtualBox
+
+Generate access key in a repository root:
+
+```
+$ ssh-keygen -t ed25519 -C "provisioner@hydra" -N "" -f secret_key
+```
+
+Default configuration contains 2 VMs, Hydra master with a singe worker machine:
 
 ```bash
-$ nixops create -d vydra ci-hydra-vbox.sh
+$ nixops create -d vydra ci-hydra-vbox.nix
 $ nixops deploy -d vydra
 ```
 
-notice change from from `ci-aws.nix` to `ci-hydra-vbox.nix`
+Note that `ci-hydra-vbox.nix` already have connection to master and slave through imports.
