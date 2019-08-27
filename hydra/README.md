@@ -1,5 +1,7 @@
 # Hydra Setup
 
+**TODO: update how to use master-slave setup**
+
 Hydra is CI system and can be installed locally like this:
 ```bash
 nix-channel --add http://hydra.nixos.org/jobset/hydra/master/channel/latest
@@ -20,9 +22,11 @@ that will start Hydra CI server on AWS.
 
 ## Local run
 
+We can run Hydra locally
+
 ```bash
-$ nixops create ci-vbox.nix ci-services.nix ci-hydra.nix jobsets.nix -d hydra
-$ nixops deploy -d hydra
+$ nixops create -d vydra ci-hydra-vbox.sh
+$ nixops deploy -d vydra
 ```
 
-notice change from from `ci-aws.nix` to `ci-vbox.nix`
+notice change from from `ci-aws.nix` to `ci-hydra-vbox.nix`
