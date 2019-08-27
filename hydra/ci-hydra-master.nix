@@ -7,10 +7,12 @@ in {
     [ config.services.hydra.port ];
 
   users.extraUsers.root.openssh.authorizedKeys.keys =
-    [ keys."sigrlami" keys."sigrlami9" ];
+    [ keys."sigrlami"
+      keys."sigrlami9"
+    ];
 
   services.hydra.enable = true;
-  services.hydra.hydraURL = "localhost:${toString config.services.hydra.port}";
+  services.hydra.hydraURL = "localhost:3000";
   services.hydra.notificationSender = "admin@localhost";
   services.hydra.useSubstitutes = true;
 
@@ -29,8 +31,10 @@ in {
     after = [ "hydra-init.service" ];
     path = [ pkgs.nix ];
     script = ''
+      echo "----------------------master"
       if [ ! -e ~hydra/.setup-is-complete ]; then
         # create admin user
+        echo "master"
         # /run/current-system/sw/bin/hydra-create-user alice --full-name 'Alice Q. User' --email-address 'alice@example.org' --password foobar --role admin
         # generate binary cache keys
         mkdir -m 0755 -p /etc/nix/hydra.example.org-1

@@ -18,20 +18,28 @@
 
     systemd.services.hydra-create-user = {
       description = "Create Admin User for Hydra";
-      serviceConfig.Type = "oneshot";
-      serviceConfig.RemainAfterExit = true;
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+        User = "hydra";
+      };
+
+      enable = false;
+
       wantedBy = [ "multi-user.target" ];
       requires = [ "hydra-init.service" ];
       after = [ "hydra-init.service" ];
       path = [ pkgs.nix ];
       script = ''
+        sleep 10
         if [ ! -e ~hydra/.admin-created ]; then
           # create admin user
-          /run/current-system/sw/bin/hydra-create-user alice --full-name 'Alice Q. User' --email-address 'alice@example.org' --password foobar --role admin
+          /run/current-system/sw/bin/hydra-create-user admin --full-name 'Administrator' --email-address 'root@localhost' --password MySecretPassword --role admin
           touch ~hydra/.admin-created
         fi
       '';
     };
+
 
     nix.buildMachines = [
       { hostName = "slave1";
