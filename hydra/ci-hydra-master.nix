@@ -28,14 +28,18 @@ in {
     serviceConfig.RemainAfterExit = true;
     wantedBy = [ "multi-user.target" ];
     requires = [ "hydra-init.service" ];
-    after = [ "hydra-init.service" ];
-    path = [ pkgs.nix ];
+    after    = [ "hydra-init.service" ];
+    path     = [ pkgs.nix ];
     script = ''
       echo "----------------------master"
       if [ ! -e ~hydra/.setup-is-complete ]; then
         # create admin user
         echo "master"
-        # /run/current-system/sw/bin/hydra-create-user alice --full-name 'Alice Q. User' --email-address 'alice@example.org' --password foobar --role admin
+        # /run/current-system/sw/bin/hydra-create-user alice \
+             --full-name 'Alice Q. User' \
+             --email-address 'alice@example.org' \
+             --password foobarx \
+             --role admin
         # generate binary cache keys
         mkdir -m 0755 -p /etc/nix/hydra.example.org-1
         nix-store --generate-binary-cache-key hydra.example.org-1 /etc/nix/hydra.example.org-1/nix-serve /etc/nix/hydra.example.org-1/nix-serve.pub

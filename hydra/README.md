@@ -17,7 +17,8 @@ nix-channel --update
 nix-env -i hydra
 ```
 
-## Local run
+## Deployment
+### Local
 
 We can run Hydra locally inside VirtualBox
 
@@ -36,16 +37,30 @@ $ nixops deploy -d vydra
 
 Note that `ci-hydra-vbox.nix` already have connection to master and slave through imports.
 
-## AWS
+Check ip address with `nixops info -d vydra`, and find correct one
+```bash
++--------+-----------------+------------+----------------------------------------------------+----------------+
+| Name   |      Status     | Type       | Resource Id                                        | IP address     |
++--------+-----------------+------------+----------------------------------------------------+----------------+
+| hydra  | Up / Up-to-date | virtualbox | nixops-a2864970-c878-11e9-b626-f8cab8605876-hydra  | 192.168.56.103 |
+| slave1 | Up / Up-to-date | virtualbox | nixops-a2864970-c878-11e9-b626-f8cab8605876-slave1 | 192.168.56.102 |
++--------+-----------------+------------+----------------------------------------------------+----------------+
+```
 
-**TODO: update how to use master-slave setup**
+navigate from browser to master/hydra machine by attaching port 3000.
+
+### AWS
 
 you need to use separate `ci-hydra.nix` file for deployment, with configuration for Hydra.
 
 To setup build for every GitHub PR on a deployed Hydra instance we need following steps
 
 ```bash
-$ nixops create ci-aws.nix ci-services.nix ci-hydra.nix jobsets.nix -d hydra
-$ nixops deploy -d hydra
+$ nixops create ci-hydra-aws.nix ci-services.nix jobsets.nix -d aydra
+$ nixops deploy -d aydrax
 ```
-that will start Hydra CI server on AWS.
+that will start Hydra CI master-slave configuration on AWS.
+
+## Configuration
+
+Hydra is based around concept of `jobsets`. You can create one from web-interface or reuse one provide
