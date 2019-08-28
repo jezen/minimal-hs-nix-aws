@@ -54,16 +54,19 @@ navigate from browser to master/hydra machine by attaching port 3000.
 
 ### AWS
 
-you need to use separate `ci-hydra.nix` file for deployment, with configuration for Hydra.
-
-To setup build for every GitHub PR on a deployed Hydra instance we need following steps
+You need to use separate `ci-aws-hydra.nix` file for deployment wich builds everything required for the basic Hydra deployment with following commands
 
 ```bash
-$ nixops create ci-hydra-aws.nix ci-services.nix jobsets.nix -d aydra
-$ nixops deploy -d aydrax
+$ nixops create -d aydra ci-hydra-aws.nix
+$ nixops deploy -d aydra
 ```
-that will start Hydra CI master-slave configuration on AWS.
+that will start Hydra CI master-slave configuration on AWS. After that you can create specific jobsets that define build rules.
 
 ## Configuration
 
-Hydra is based around concept of `jobsets`. You can create one from web-interface or reuse one provide by this repository in `jobsets.nix`. This particular jobset oriented towards PR-based approach that will build particular branch on PR submitted to the repository. In order to get access to private repo, you need to supply ssh dev key to the hydra instance inside `ci-hydra-master.nix`
+Hydra is based around concept of `jobsets`. You can create one from web-interface or reuse one provide by this repository in `jobsets.nix`. This particular jobset oriented towards PR-based approach that will build particular branch on PR submitted to the repository. In order to get access to private repo, you need to supply ssh dev key to the hydra instance inside `ci-hydra-master.nix`. You can attach already defined jobsets and deploy with following commands
+
+```bash
+$ nixops create -d aydra ci-hydra-aws.nix jobsets.nix
+$ nixops deploy -d aydra
+```

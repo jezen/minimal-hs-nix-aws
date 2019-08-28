@@ -7,17 +7,20 @@ let
   privateKey  = "../nix.pem";              # /path/to/your-key-name.pem
 
 in {
+  network.description = "hydra-aws";
+  hydra-prod = { resources, ... }: {
+    imports = [
+      ./ci-hydra-master.nix
+      ./ci-hydra-slave.nix
+    ];
 
-  production = { resources, ... }: {
-    deployment.targetEnv        = "ec2";
-    deployment.ec2.accessKeyId  = accessKeyId;
-    deployment.ec2.region       = region;
-    deployment.ec2.instanceType = awsEC2type;
-    deployment.ec2.keyPair      = "nix";
-    deployment.ec2.privateKey   = privateKey;
+    deployment.targetEnv          = "ec2";
+    deployment.ec2.accessKeyId    = accessKeyId;
+    deployment.ec2.region         = region;
+    deployment.ec2.instanceType   = awsEC2type;
+    deployment.ec2.keyPair        = "nix";
+    deployment.ec2.privateKey     = privateKey;
     deployment.ec2.securityGroups = [ "default" "full-access" ];
-    nixpkgs.localSystem.system  = "x86_64-linux";
+    nixpkgs.localSystem.system    = "x86_64-linux";
   };
-
-
 }

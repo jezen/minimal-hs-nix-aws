@@ -12,7 +12,7 @@ in {
     ];
 
   services.hydra.enable = true;
-  services.hydra.hydraURL = "localhost:3000";
+  services.hydra.hydraURL = "localhost:${toString config.services.hydra.port}";
   services.hydra.notificationSender = "admin@localhost";
   services.hydra.useSubstitutes = true;
 
@@ -22,11 +22,24 @@ in {
     secretKeyFile = "/etc/nix/hydra.example.org-1/nix-serve";
   };
 
+  # attach PostgreSQL
+  services.postgresql = {
+        enable = true;
+        package = pkgs.postgresql;
+        identMap = ''
+            hydra-users hydra hydra
+            hydra-users hydra-queue-runner hydra
+            hydra-users hydra-www hydra
+            hydra-users root postgres
+            hydra-users postgres postgres
+          '';
+        };
+
   systemd.services.hydra-manual-setup = {
     description = "Hydra manual setup";
     serviceConfig.Type = "oneshot";
     serviceConfig.RemainAfterExit = true;
-    wantedBy = [ "multi-user.target" ];
+    wantedBy = [ "multi-user.target"  ];
     requires = [ "hydra-init.service" ];
     after    = [ "hydra-init.service" ];
     path     = [ pkgs.nix ];
