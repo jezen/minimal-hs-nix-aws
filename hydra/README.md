@@ -18,15 +18,18 @@ nix-env -i hydra
 ```
 
 ## Deployment
+
 ### Local
 
-We can run Hydra locally inside VirtualBox
+We can run Hydra locally inside VirtualBox, functionality provided in `ci-hydra-vbox.nix` but you need to do aditional step to configure proper access.
 
-Generate access key in a repository root:
+1. Generate access key in a repository root:
 
 ```
 $ ssh-keygen -t ed25519 -C "provisioner@hydra" -N "" -f secret_key
 ```
+
+2. Add this key to `ci-keys.nix` with desired synonym.
 
 Default configuration contains 2 VMs, Hydra master with a singe worker machine:
 
@@ -63,4 +66,4 @@ that will start Hydra CI master-slave configuration on AWS.
 
 ## Configuration
 
-Hydra is based around concept of `jobsets`. You can create one from web-interface or reuse one provide
+Hydra is based around concept of `jobsets`. You can create one from web-interface or reuse one provide by this repository in `jobsets.nix`. This particular jobset oriented towards PR-based approach that will build particular branch on PR submitted to the repository. In order to get access to private repo, you need to supply ssh dev key to the hydra instance inside `ci-hydra-master.nix`
