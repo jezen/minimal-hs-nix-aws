@@ -8,9 +8,23 @@ let
 
 in {
   network.description = "hydra-aws";
-  hydra-prod = { resources, ... }: {
+  hydra-master = { resources, ... }: {
     imports = [
       ./ci-hydra-master.nix
+    ];
+
+    deployment.targetEnv          = "ec2";
+    deployment.ec2.accessKeyId    = accessKeyId;
+    deployment.ec2.region         = region;
+    deployment.ec2.instanceType   = "t2.small";
+    deployment.ec2.keyPair        = "nix";
+    deployment.ec2.privateKey     = privateKey;
+    deployment.ec2.securityGroups = [ "default" "full-access" ];
+    nixpkgs.localSystem.system    = "x86_64-linux";
+  };
+
+  hydra-slave = { resources, ... }: {
+    imports = [
       ./ci-hydra-slave.nix
     ];
 
@@ -23,4 +37,5 @@ in {
     deployment.ec2.securityGroups = [ "default" "full-access" ];
     nixpkgs.localSystem.system    = "x86_64-linux";
   };
+
 }
