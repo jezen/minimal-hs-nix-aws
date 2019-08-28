@@ -70,3 +70,8 @@ Hydra is based around concept of `jobsets`. You can create one from web-interfac
 $ nixops create -d aydra ci-hydra-aws.nix jobsets.nix
 $ nixops deploy -d aydra
 ```
+
+if you want to create additional Hydra users after intallation. This is possible by executing following command
+```
+nixops ssh -d aydra hydra-master 'hydra-create-user myUserLogin --full-name "Name Surname" --email-address 's.name@gmail.com' --password myExtremelySafePassword --role admin --role hydra'
+```

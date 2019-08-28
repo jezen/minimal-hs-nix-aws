@@ -21,6 +21,21 @@ in {
     deployment.ec2.privateKey     = privateKey;
     deployment.ec2.securityGroups = [ "default" "full-access" ];
     nixpkgs.localSystem.system    = "x86_64-linux";
+
+    services.nginx = {
+        enable     = true;
+        httpConfig = ''
+          server {
+            listen 80;
+            server_name _;
+
+            location / {
+              proxy_pass http://127.0.0.1:3000;
+            }
+          }
+        '';
+      };
+
   };
 
   hydra-slave = { resources, ... }: {
