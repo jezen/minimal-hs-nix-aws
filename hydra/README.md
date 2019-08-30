@@ -64,14 +64,25 @@ that will start Hydra CI master-slave configuration on AWS. After that you can c
 
 ## Configuration
 
+### Basic
+
 Hydra is based around concept of `jobsets`. You can create one from web-interface or reuse one provide by this repository in `jobsets.nix`. This particular jobset oriented towards PR-based approach that will build particular branch on PR submitted to the repository. In order to get access to private repo, you need to supply ssh dev key to the hydra instance inside `ci-hydra-master.nix`. You can attach already defined jobsets and deploy with following commands
 
 ```bash
-$ nixops create -d aydra ci-hydra-aws.nix jobsets.nix
+$ nixops create -d aydra ci-hydra-aws.nix
 $ nixops deploy -d aydra
 ```
 
 if you want to create additional Hydra users after intallation. This is possible by executing following command
 ```
 nixops ssh -d aydra hydra-master 'hydra-create-user myUserLogin --full-name "Name Surname" --email-address 's.name@gmail.com' --password myExtremelySafePassword --role admin --role hydra'
+```
+
+### PR based
+
+Additionally this repository contains config for Hydra in `hydra.nix` that will defined particular git repository and flow inside code and it's useful when Hydra instance running specifically for 1 project. Jobsets will be based of this config.
+
+```bash
+$ nixops create -d aydra ci-hydra-aws.nix hydra.nix jobsets.nix
+$ nixops deploy -d aydra
 ```
