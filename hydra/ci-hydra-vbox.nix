@@ -28,18 +28,17 @@
 
       wantedBy = [ "multi-user.target" ];
       requires = [ "hydra-init.service" ];
-      after = [ "hydra-init.service" ];
-      path = [ pkgs.nix ];
+      after    = [ "hydra-init.service" ];
+      path     = [ pkgs.nix ];
       script = ''
         sleep 10
         if [ ! -e ~hydra/.admin-created ]; then
           # create admin user
-          /run/current-system/sw/bin/hydra-create-user admin --full-name 'Administrator' --email-address 'root@localhost' --password MySecretPassword --role admin
+          /run/current-system/sw/bin/hydra-create-user admin --full-name 'Administrator' --email-address 'root@localhost' --password MySecretPassword --role admin --role hydra
           touch ~hydra/.admin-created
         fi
       '';
     };
-
 
     nix.buildMachines = [
       { hostName = "slave1";

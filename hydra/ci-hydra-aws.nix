@@ -20,6 +20,7 @@ in {
     deployment.ec2.keyPair        = "nix";
     deployment.ec2.privateKey     = privateKey;
     deployment.ec2.securityGroups = [ "default" "full-access" ];
+    deployment.ec2.ebsInitialRootDiskSize = 50;
     nixpkgs.localSystem.system    = "x86_64-linux";
 
     services.nginx = {
@@ -31,6 +32,9 @@ in {
 
             location / {
               proxy_pass http://127.0.0.1:3000;
+              proxy_set_header Host $host;
+              proxy_set_header X-Real-IP $remote_addr;
+              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
             }
           }
         '';
@@ -50,6 +54,7 @@ in {
     deployment.ec2.keyPair        = "nix";
     deployment.ec2.privateKey     = privateKey;
     deployment.ec2.securityGroups = [ "default" "full-access" ];
+    deployment.ec2.ebsInitialRootDiskSize = 50;
     nixpkgs.localSystem.system    = "x86_64-linux";
   };
 

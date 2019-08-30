@@ -4,7 +4,11 @@ let
   keys = import ./ci-keys.nix;
 in {
   networking.firewall.allowedTCPPorts =
-    [ config.services.hydra.port ];
+    [ config.services.hydra.port
+      22
+      80
+      443
+    ];
 
   users.extraUsers.root.openssh.authorizedKeys.keys =
     [ keys."sigrlami"
