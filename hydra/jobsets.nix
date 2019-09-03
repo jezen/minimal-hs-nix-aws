@@ -1,14 +1,17 @@
-{ prs }:
-
+{ repo-prs ? ./hydra.json
+, nixpkgs ? <nixpkgs>
+}:
 let
-  pkgs = import ./nixpkgs {};
+  # pkgs = import ./nixpkgs {}; -- if we need specify version from github
+  pkgs = import nixpkgs {};
+  prs = builtins.fromJSON (builtins.readFile repo-prs );
   mkFetchGithub = value: {
     inherit value;
     type = "git";
     emailresponsible = false;
   };
 in
-with pkgs.lib;
+#with pkgs.lib;
 let
   defaults = jobs: {
     inherit (jobs) description;
@@ -57,9 +60,9 @@ let
       };
     };
   };
-  processedPrs = mapAttrs' makePr (builtins.fromJSON (builtins.readFile prs));
+  processedPrs = pkgs.lib.mapAttrs' makePr (builtins.fromJSON (builtins.readFile prs));
   jobsetsAttrs = processedPrs //
-    genAttrs ["master"] branchJobset;
+    pkgs.lib.genAttrs ["master"] branchJobset;
 in {
   jobsets = pkgs.writeText "spec.json" (builtins.toJSON jobsetsAttrs);
 }

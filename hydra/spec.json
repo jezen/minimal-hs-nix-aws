@@ -9,15 +9,21 @@
   "enableemail": false,
   "emailoverride": "",
   "keepnr": 10,
-  "inputs":{
-      "src": { "type": "git"
-	       , "value": "ssh://git@github.com/sigrlami/minimal-hs-nix-aws.git"
-	       , "emailresponsible": false },
-      "nixpkgs": { "type": "git"
-		   , "value": "ssh://git@github.com/NixOS/nixpkgs.git"
-		   , "emailresponsible": false },
-      "prsJSON": { "type": "githubpulls"
-		   , "value": "hydra leaves"
-		   , "emailresponsible": false }
+  "inputs": {
+    "src": {
+      "type": "git",
+      "value": "ssh://git@github.com/sigrlami/minimal-hs-nix-aws.git",
+      "emailresponsible": false
+    },
+    "nixpkgs": {
+      "type": "git",
+      "value": "ssh://git@github.com/NixOS/nixpkgs.git",
+      "emailresponsible": false
+    },
+    "prsJSON": {
+      "type": "githubpulls",
+      "value": "hydra leaves",
+      "emailresponsible": false
+    }
   }
 }

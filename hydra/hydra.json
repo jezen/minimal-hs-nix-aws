@@ -20,10 +20,11 @@
       "value": "https://github.com/NixOS/nixpkgs-channels nixos-unstable",
       "emailresponsible": false
     },
-    "prs": {
+    "repo-prs": {
       "type": "githubpulls",
       "value": "sigrlami minimal-hs-nix-aws",
       "emailresponsible": false
     }
   }
 }
+x
