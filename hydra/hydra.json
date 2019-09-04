@@ -1,0 +1,30 @@
+{
+  "enabled": 1,
+  "hidden": true,
+  "description": "Jobsets",
+  "nixexprinput": "src",
+  "nixexprpath": "jobsets.nix",
+  "checkinterval": 300,
+  "schedulingshares": 100,
+  "enableemail": false,
+  "emailoverride": "",
+  "keepnr": 10,
+  "inputs": {
+    "src": {
+      "type": "git",
+      "value": "https://github.com/sigrlami/minimal-hs-nix-aws master",
+      "emailresponsible": false
+    },
+    "nixpkgs": {
+      "type": "git",
+      "value": "https://github.com/NixOS/nixpkgs-channels nixos-unstable",
+      "emailresponsible": false
+    },
+    "repo-prs": {
+      "type": "githubpulls",
+      "value": "sigrlami minimal-hs-nix-aws",
+      "emailresponsible": false
+    }
+  }
+}
+x
