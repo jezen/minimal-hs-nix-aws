@@ -1,10 +1,10 @@
 let
-  pinned = import ./nixpkgs.nix;
+  pinned = import ./nix/nixpkgs.nix;
 
 in
 
   { pkgs ? import pinned {}
-  , compiler ? "ghc843"
+  , compiler ? "ghc865"
   }:
 
   pkgs.haskell.packages.${compiler}.callPackage ./minimal.nix { }
