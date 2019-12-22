@@ -3,10 +3,9 @@
 
   production =
     { config, pkgs, ... }: let
-      nixpkgs = import ./nixpkgs.nix;
-      myPkgs  = import nixpkgs { localSystem.system = "x86_64-linux"; };
+      myPkgs = import ./nixpkgs.nix { localSystem.system = "x86_64-linux"; };
 
-      minimal = pkgs.haskell.lib.overrideCabal (import ./default.nix { pkgs = myPkgs; }) (drv: {
+      minimal = pkgs.haskell.lib.overrideCabal (import ../default.nix { pkgs = myPkgs; }) (drv: {
         doCheck = false;
         doHaddock = false;
         enableLibraryProfiling = false;
