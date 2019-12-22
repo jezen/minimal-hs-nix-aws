@@ -1,6 +1,7 @@
-(import <nixpkgs> {}).fetchFromGitHub {
+let
   owner = "NixOS";
   repo = "nixpkgs";
-  rev = "1233c8d9e9bc463899ed6a8cf0232e6bf36475ee";
-  sha256 = "1lagfycy2lvfc8cdxk98dz2rxjlrbmv9hj42x0x40sy66bck1w0y";
-}
+  rev = "b2448a9fde1225c3681e576ab4d35d68631ca75e";
+  url = "https://github.com/${owner}/${repo}/archive/${rev}.tar.gz";
+in
+  import (builtins.fetchTarball url)
